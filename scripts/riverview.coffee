@@ -14,9 +14,12 @@ module.exports = (robot) ->
         $ = cheerio.load(body)
         now_showing = for element in $('.blog-sidebar .playing li').toArray()
           name = $(element).find('a').text().trim()
-          time = $(element).contents().last().text().trim()
-          [name, time]
+          timeRegexp = /\b(\d?\d:\d\d)\s*([AP]M)/gi
+          timeContent = $(element).html()
+          times = (match while (match = timeRegexp.exec timeContent)?)
+          [name, times]
 
         msg.send "Now showing:"
-        for [name, time] in now_showing
-          msg.send "#{time} #{name}"
+        for [name, times] in now_showing
+          timeString = ("#{time[1]} #{time[2]}" for time in times)
+          msg.send "#{timeString.join " & "} #{name}"
