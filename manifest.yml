@@ -2,7 +2,7 @@ applications:
 - name: mnbot
   domain: mybluemix.net
   host: mnbot
-  buildpack: https://github.com/jthomas/nodejs-v4-buildpack.git
+  buildpack: nodejs_buildpack
   command: ./bin/hubot --adapter slack --name mnbot
   path: .
   instances: 1
